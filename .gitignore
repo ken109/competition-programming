@@ -1,2 +1,10 @@
+# -- C++ --
 cmake-build-debug/
+CMakeLists.txt
+
+# -- Rust --
+target/
+Cargo.toml
+Cargo.lock
+
 input.txt
