@@ -36,7 +36,7 @@ while IFS= read -r -d '' project_dir; do
         echo "authors = [\"Kensuke Kubo <kensukekubo19@gmail.com>\"]"
         echo ""
         echo "[dependencies]"
-        echo "proconio = \"0.4.2\""
+        echo "proconio = { version = \"0.4.2\", features = [\"derive\"] }"
         echo ""
       } >"$contest_dir/rust/Cargo.toml"
 
