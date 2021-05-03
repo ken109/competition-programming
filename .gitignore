@@ -1,4 +1,5 @@
 .idea/
+.run/
 
 # -- C++ --
 cmake-build-debug/
