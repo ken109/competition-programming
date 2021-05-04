@@ -25,33 +25,35 @@ fn main() {
         },
     ];
 
-    let mut parent = HashMap::<char, char>::new();
-    let mut distance = HashMap::<char, usize>::new();
-    let mut heap = HashMap::<char, usize>::new();
+    let mut prevs = HashMap::<char, char>::new();
+    let mut cost = HashMap::<char, usize>::new();
+    let mut pending = HashMap::<char, usize>::new();
 
+    // initialize
     for point in points.iter() {
-        heap.insert(point.id, usize::MAX);
+        pending.insert(point.id, usize::MAX);
     }
 
-    heap.insert(points[0].id, 0);
+    pending.insert(points[0].id, 0);
 
-    while heap.iter().count() > 0 {
-        let (&min_id, &min_distance) = heap.iter().min().unwrap();
+    // calculate
+    while pending.iter().count() > 0 {
+        let (&min_id, &min_cost) = pending.iter().min().unwrap();
 
-        distance.insert(min_id, min_distance);
+        cost.insert(min_id, min_cost);
 
-        heap.remove(&min_id.clone());
+        pending.remove(&min_id);
 
-        for (to_id, to_distance) in &points.iter().find(|&p| p.id == min_id.clone()).unwrap().to {
-            let now_distance = distance.get(&min_id).unwrap() + to_distance;
+        for (to_id, to_cost) in &points.iter().find(|&p| p.id == min_id).unwrap().to {
+            let total_cost = cost.get(&min_id).unwrap() + to_cost;
 
-            if heap.contains_key(to_id) && heap.get(to_id).unwrap() > &now_distance {
-                heap.insert(*to_id, now_distance);
-                parent.insert(*to_id, min_id);
+            if pending.contains_key(to_id) && pending.get(to_id).unwrap() > &total_cost {
+                pending.insert(*to_id, total_cost);
+                prevs.insert(*to_id, min_id);
             }
         }
     }
 
-    println!("{:?}", parent);
-    println!("{:?}", distance);
+    println!("{:?}", prevs);
+    println!("{:?}", cost);
 }
