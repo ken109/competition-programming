@@ -14,6 +14,8 @@ root=$(
   echo "set(CMAKE_CXX_STANDARD 17)"
   echo ""
   echo "include_directories(\$ENV{GHQ_ROOT}/github.com/atcoder/ac-library)"
+  echo "include_directories(/usr/local/opt/boost/include)"
+  echo "include_directories(/usr/local/opt/boost/lib)"
   echo ""
 } >"$root/CMakeLists.txt"
 
