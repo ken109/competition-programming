@@ -9,7 +9,7 @@ root=$(
 
 {
   echo "cmake_minimum_required(VERSION 3.17)"
-  echo "project(ken109_procon)"
+  echo "project(${USER}_procon)"
   echo ""
   echo "set(CMAKE_CXX_STANDARD 17)"
   echo ""
@@ -21,10 +21,10 @@ root=$(
 
 {
   echo "[package]"
-  echo "name = \"ken109_procon\""
+  echo "name = \"${USER}_procon\""
   echo "version = \"1.0.0\""
   echo "edition = \"2018\""
-  echo "authors = [\"Kensuke Kubo <kensukekubo19@gmail.com>\"]"
+  echo "authors = [\"$(git config --global user.name) <$(git config --global user.email)>\"]"
   echo ""
   echo "[dependencies]"
   echo "num = \"=0.2.1\""
@@ -71,8 +71,8 @@ root=$(
 
 while IFS= read -r -d '' project_dir; do
   while IFS= read -r -d '' contest_dir; do
-    project=$(echo "$contest_dir" | awk '{split($0, ary, "/"); print ary[6]}')
-    contest=$(echo "$contest_dir" | awk '{split($0, ary, "/"); print ary[7]}')
+    project=$(echo "$contest_dir" | perl -ne 'print +(split /\//, $_)[-2]')
+    contest=$(echo "$contest_dir" | perl -ne 'print +(split /\//, $_)[-1]')
 
     # ------------------------- C++ -------------------------
     if [[ -d "$contest_dir/c++" ]]; then
@@ -85,7 +85,6 @@ while IFS= read -r -d '' project_dir; do
 
     # ------------------------- Rust -------------------------
     if [[ -d "$contest_dir/rust" ]]; then
-
       while IFS= read -r -d '' rust_path; do
         {
           echo "[[bin]]"
